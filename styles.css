@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.svg {
+  border-radius: 15px;
+  padding-top: 50px;
+  box-shadow: 7px 7px 19px 0px  rgba(189,192,199,1), 
+              -7px -7px 19px 0px  rgba(189,192,199,1),
+              7px -7px 19px 0px  rgba(189,192,199,1),
+              -7px 7px 19px 0px  rgba(189,192,199,1);
+  box-shadow: ;
+}
+
+.title {
+  transform: translateY(60px);
+  text-align: center;
+  font-weight: 100;
+  font-size: 30px;
+  margin: 0;
+}

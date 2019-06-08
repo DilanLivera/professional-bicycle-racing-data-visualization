@@ -57,35 +57,37 @@ document.addEventListener("DOMContentLoaded", function() {
            .attr("transform", `translate(${margin.left},0)`)
 
       //add legend
-      svg
-         .append("rect")
-         .attr("x", width-100)
-         .attr("y", height/4)
-         .attr("width", 15)
-         .attr("height", 15)
-         .style("fill", "rgb(255, 127, 14)")
-      
-      svg
-         .append("text")
-         .attr("x", width-215)
-         .attr("y", height/4+11)
-         .text("No doping allegations")
-         .style("font-size", "10px")
+      let lengend01 = svg.append("g")
+                           .attr("id", "legend")
+                           .style("transform", "translate(0, 150px)");
+           
+      lengend01.append("text")
+                 .attr("x", width-325)
+                 .attr("y", 10)
+                 .text("No doping allegations")
+                 .style("font-size", "10px");
 
-      svg
-         .append("rect")
-         .attr("x", width-100)
-         .attr("y", height/4 + 25)
-         .attr("width", 15)
-         .attr("height", 15)
-         .style("fill", "rgb(31, 119, 180)")
+      lengend01.append("rect")
+                 .attr("width", 15)
+                 .attr("height", 15)
+                 .attr("x", width-215)
+                 .style("fill", "rgb(255, 127, 14)");
 
-      svg
-         .append("text")
-         .attr("x", width-250)
-         .attr("y", height/4+36)
-         .text("Riders with doping allegations")
-         .style("font-size", "10px")
+      let lengend02 = svg.append("g")
+                           .attr("id", "legend")
+                           .style("transform", "translate(0, 170px)");
+                   
+      lengend02.append("text")
+                  .attr("x", width-360)
+                  .attr("y", 10)
+                  .text("Riders with doping allegations")
+                  .style("font-size", "10px");
+        
+      lengend02.append("rect")
+                  .attr("width", 15)
+                  .attr("height", 15)
+                  .attr("x", width-215)
+                  .style("fill", "rgb(31, 119, 180)");
 
       //draw circles
       svg.selectAll(".circle")

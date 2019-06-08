@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let doping = d.Doping;
         
         tooltip
+          .attr("data-year", year)
           .style("opacity", 1)
           .style("left", `${d3.event.x - tooltip.node().offsetWidth/2}px`)
           .style("top", `${d3.event.y + 25}px`)

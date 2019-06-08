@@ -2,6 +2,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: sans-serif;
 }
 
 .svg {
@@ -11,13 +12,31 @@ body {
               -7px -7px 19px 0px  rgba(189,192,199,1),
               7px -7px 19px 0px  rgba(189,192,199,1),
               -7px 7px 19px 0px  rgba(189,192,199,1);
-  box-shadow: ;
 }
 
 .title {
   transform: translateY(60px);
-  text-align: center;
+  text-align: center;  
   font-weight: 100;
   font-size: 30px;
   margin: 0;
+}
+
+#tooltip {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;                    
+  background-color: white;
+  border: 2px solid lightgrey;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  font-family: monospace;  
+}
+
+#tooltip > p {
+  letter-spacing: 0px;
 }

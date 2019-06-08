@@ -56,17 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
          .call(yAxis)
            .attr("transform", `translate(${margin.left},0)`)
 
-      //draw circles
-      svg.selectAll(".circle")
-         .data(data)
-         .enter()
-         .append("circle")
-           .attr("cx", d => xScale(d3.timeParse(yearSpecifier)(d.Year)))
-           .attr("cy", d => yScale(d3.timeParse(minSecSpecifier)(d.Time)))
-           .attr("fill", d => (d.Doping === "") ? "rgb(255, 127, 14)" : "rgb(31, 119, 180)")
-           .attr("r", 6)
-           .attr("stroke", "black");
-
       //add legend
       svg
          .append("rect")
@@ -81,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
          .attr("x", width-215)
          .attr("y", height/4+11)
          .text("No doping allegations")
-         .style("font", "10px sans-serif")
+         .style("font-size", "10px")
 
       svg
          .append("rect")
@@ -96,7 +85,49 @@ document.addEventListener("DOMContentLoaded", function() {
          .attr("x", width-250)
          .attr("y", height/4+36)
          .text("Riders with doping allegations")
-         .style("font", "10px sans-serif")
+         .style("font-size", "10px")
 
+      //draw circles
+      svg.selectAll(".circle")
+         .data(data)
+         .enter()
+         .append("circle")
+           .attr("cx", d => xScale(d3.timeParse(yearSpecifier)(d.Year)))
+           .attr("cy", d => yScale(d3.timeParse(minSecSpecifier)(d.Time)))
+           .attr("fill", d => (d.Doping === "") ? "rgb(255, 127, 14)" : "rgb(31, 119, 180)")
+           .attr("r", 6)
+           .attr("stroke", "black")
+           .on("mouseover", showTooltip)
+           .on("touchstart", showTooltip)
+           .on("mouseout", hideTooltip)    
+           .on("touchend", hideTooltip);           
+      
+      //add tooltip
+      let tooltip = d3.select("body")
+                      .append("div")
+                        .attr("id", "tooltip")
+
+      function showTooltip(d) {
+        let name = d.Name;
+        let nationality = d.Nationality;
+        let year = d.Year;
+        let time = d.Time;
+        let doping = d.Doping;
+        
+        tooltip
+          .style("opacity", 1)
+          .style("left", `${d3.event.x - tooltip.node().offsetWidth/2}px`)
+          .style("top", `${d3.event.y + 25}px`)
+          .html(`
+            <p>${name}: ${nationality}</p>
+            <p>Year: ${year}, Time: ${time}</p>
+            <p>${doping}</p>
+          `);         
+      }
+
+      function hideTooltip() {
+        tooltip
+          .style("opacity", 0);        
+      }
     });
 });

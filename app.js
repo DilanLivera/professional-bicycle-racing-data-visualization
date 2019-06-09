@@ -1,14 +1,17 @@
 document.addEventListener("DOMContentLoaded", function() {
   const url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
   const title = "Doping in Professional Bicycle Racing";
+  const secondTitle = "35 Fastest times up Alpe d'Huez";
   const width = 1000;
   const height = 600;
-  const margin = { top: 20, left: 60, bottom: 20, right: 0 };
+  const margin = { top: 20, left: 80, bottom: 20, right: 0 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const minSecSpecifier  = "%M:%S";
   const yearSpecifier  = "%Y";
   const startYear = "1993";
+  const endYear = "2016";
+  const yTitle = "Time in Minutes";
 
   //get data
   d3.queue()
@@ -27,10 +30,14 @@ document.addEventListener("DOMContentLoaded", function() {
       d3.select("#title")
           .classed("title", true)
           .text(title);
+      
+      d3.select("#second-title")
+          .classed("second-title", true)
+          .text(secondTitle);
 
       //set up scales
       let xScale = d3.scaleTime()
-                     .domain([d3.timeParse(yearSpecifier)(startYear),d3.max(data, d => d3.timeParse(yearSpecifier)(d.Year))])
+                     .domain([d3.timeParse(yearSpecifier)(startYear),d3.timeParse(yearSpecifier)(endYear)])
                      .range([margin.left, innerWidth]);
 
       let yScale = d3.scaleTime()
@@ -55,6 +62,15 @@ document.addEventListener("DOMContentLoaded", function() {
            .attr("id", "y-axis")
          .call(yAxis)
            .attr("transform", `translate(${margin.left},0)`)
+      
+      //y-axis label
+      svg.append("text")
+         .attr("text-anchor", "end")
+         .attr("transform", "rotate(-90)")
+         .attr("y", margin.left-50)
+         .attr("x", margin.top-60)
+         .classed("y-label", true)
+         .text(yTitle)      
 
       //add legend
       let lengend01 = svg.append("g")
@@ -90,10 +106,13 @@ document.addEventListener("DOMContentLoaded", function() {
                   .style("fill", "rgb(31, 119, 180)");
 
       //draw circles
-      svg.selectAll(".circle")
+      svg.selectAll(".dot")
          .data(data)
          .enter()
          .append("circle")
+           .classed("dot", true)
+           .attr("data-xvalue", d => d3.timeParse(yearSpecifier)(d.Year))
+           .attr("data-yvalue", d => d3.timeParse(minSecSpecifier)(d.Time))
            .attr("cx", d => xScale(d3.timeParse(yearSpecifier)(d.Year)))
            .attr("cy", d => yScale(d3.timeParse(minSecSpecifier)(d.Time)))
            .attr("fill", d => (d.Doping === "") ? "rgb(255, 127, 14)" : "rgb(31, 119, 180)")
@@ -117,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let doping = d.Doping;
         
         tooltip
-          .attr("data-year", year)
+          .attr("data-year", d3.timeParse(yearSpecifier)(year))
           .style("opacity", 1)
           .style("left", `${d3.event.x - tooltip.node().offsetWidth/2}px`)
           .style("top", `${d3.event.y + 25}px`)

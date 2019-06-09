@@ -15,11 +15,24 @@ body {
 }
 
 .title {
-  transform: translateY(60px);
+  transform: translateY(80px);
   text-align: center;  
   font-weight: 100;
   font-size: 30px;
   margin: 0;
+}
+
+.second-title {
+  transform: translateY(80px);
+  text-align: center;  
+  font-weight: 100;
+  font-size: 20px;
+  margin: 0;  
+}
+
+.y-label {
+  font-size: 20px;
+  font-weight: 100;
 }
 
 #tooltip {
@@ -39,4 +52,5 @@ body {
 
 #tooltip > p {
   letter-spacing: -0.5px;
+  font-size: 
 }
